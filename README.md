@@ -28,7 +28,7 @@ Cart state is managed using React Context.
 
 Clone repository
 
-git clone https://github.com/yourusername/ecoyaan-checkout
+git clone https://github.com/tanishka462/ecoyaan-checkout
 
 Install dependencies
 
