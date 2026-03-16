@@ -1,10 +1,9 @@
 "use client";
 
+import { Suspense, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useCart } from "../../context/CartContext";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -17,7 +16,7 @@ const indianStates = [
   "Uttarakhand","West Bengal","Delhi"
 ];
 
-export default function AddressPage() {
+function AddressContent(){
 
   const { register, handleSubmit, formState:{errors}, reset } = useForm();
   const { setAddress } = useCart();
@@ -28,7 +27,7 @@ export default function AddressPage() {
   const searchParams = useSearchParams();
   const isEdit = searchParams.get("edit");
 
-  useEffect(() => {
+  useEffect(()=>{
 
     if(isEdit === "true"){
 
@@ -78,8 +77,6 @@ export default function AddressPage() {
           className="grid grid-cols-1 md:grid-cols-2 gap-5"
         >
 
-          {/* NAME */}
-
           <div className="md:col-span-2">
             <input
               {...register("name",{required:"Full name required"})}
@@ -88,9 +85,6 @@ export default function AddressPage() {
             />
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
-
-
-          {/* EMAIL */}
 
           <div>
             <input
@@ -107,9 +101,6 @@ export default function AddressPage() {
             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
-
-          {/* PHONE */}
-
           <div>
             <PhoneInput
               country={"in"}
@@ -120,9 +111,6 @@ export default function AddressPage() {
             />
           </div>
 
-
-          {/* ADDRESS LINE 1 */}
-
           <div className="md:col-span-2">
             <input
               {...register("address1",{required:"Address required"})}
@@ -132,9 +120,6 @@ export default function AddressPage() {
             {errors.address1 && <p className="text-red-500 text-sm">{errors.address1.message}</p>}
           </div>
 
-
-          {/* ADDRESS LINE 2 */}
-
           <div className="md:col-span-2">
             <input
               {...register("address2")}
@@ -142,9 +127,6 @@ export default function AddressPage() {
               className="border p-3 rounded w-full"
             />
           </div>
-
-
-          {/* PIN */}
 
           <div>
             <input
@@ -161,9 +143,6 @@ export default function AddressPage() {
             {errors.pincode && <p className="text-red-500 text-sm">{errors.pincode.message}</p>}
           </div>
 
-
-          {/* CITY */}
-
           <div>
             <input
               {...register("city",{required:"City required"})}
@@ -172,9 +151,6 @@ export default function AddressPage() {
             />
             {errors.city && <p className="text-red-500 text-sm">{errors.city.message}</p>}
           </div>
-
-
-          {/* STATE */}
 
           <div className="md:col-span-2">
             <select
@@ -191,9 +167,6 @@ export default function AddressPage() {
 
             {errors.state && <p className="text-red-500 text-sm">{errors.state.message}</p>}
           </div>
-
-
-          {/* BUTTON */}
 
           <div className="md:col-span-2 pt-4">
 
@@ -213,4 +186,12 @@ export default function AddressPage() {
 
   );
 
+}
+
+export default function AddressPage(){
+  return(
+    <Suspense fallback={<div>Loading...</div>}>
+      <AddressContent/>
+    </Suspense>
+  )
 }
